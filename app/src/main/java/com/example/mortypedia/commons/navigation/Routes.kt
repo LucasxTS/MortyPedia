@@ -1,4 +1,4 @@
-package com.example.mortypedia.domain.models
+package com.example.mortypedia.commons.navigation
 
 enum class Routes {
     CHARACTERS,

@@ -74,4 +74,12 @@ dependencies {
     // KOIN
     implementation ("io.insert-koin:koin-android:3.4.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.4.0")
+
+    // RETROFIT
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+
+    //GSON
+    implementation ("com.google.code.gson:gson:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }

@@ -1,7 +1,7 @@
 package com.example.mortypedia
 
 import android.app.Application
-import com.example.mortypedia.commons.di.appModule
+import com.example.mortypedia.commons.di.apiModule
 import org.koin.core.context.startKoin
 
 class AppApplication() : Application() {
@@ -11,7 +11,7 @@ class AppApplication() : Application() {
 
         startKoin {
             modules(
-                appModule
+                apiModule
             )
         }
     }
