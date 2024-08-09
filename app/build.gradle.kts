@@ -66,6 +66,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+
 
     // COROUTINES
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -74,6 +79,7 @@ dependencies {
     // KOIN
     implementation ("io.insert-koin:koin-android:3.4.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.4.0")
+    implementation ("io.insert-koin:koin-core:3.4.0")
 
     // RETROFIT
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -81,5 +87,9 @@ dependencies {
     //GSON
     implementation ("com.google.code.gson:gson:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //ViewModel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+
 
 }

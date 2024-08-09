@@ -13,11 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController: NavHostController = rememberNavController()
-            val context = LocalContext.current
-            FlowView(navController = navController, context = context)
+            FlowView(navController = navController)
         }
     }
 }
-
-
 
