@@ -9,18 +9,6 @@ import com.example.mortypedia.domain.network.repositories.CharacterRepository
 import kotlinx.coroutines.launch
 
 class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    private val _characters = MutableLiveData<CharacterResponseApi>()
 
-    fun getAllData() {
-        viewModelScope.launch {
-            try {
-               val request = characterRepository.getAllData()
-                if (request.isSuccessful) {
-                    _characters.postValue(request.body())
-                }
-            } catch (e: Exception) {
-                println(e)
-            }
-        }
-    }
+
 }

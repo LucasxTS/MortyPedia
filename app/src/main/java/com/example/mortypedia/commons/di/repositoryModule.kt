@@ -6,11 +6,9 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
 
-    single { provideUserViewModel(get()) }
+    single { CharacterRepository(get()) }
 }
 
-fun provideUserViewModel(apiClient: ApiClient): CharacterRepository  {
-   return CharacterRepository(apiClient)
-}
+
 
 

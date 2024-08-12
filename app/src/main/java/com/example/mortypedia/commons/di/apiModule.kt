@@ -10,14 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val apiModule = module {
 
-     single { provideUserApi() }
-}
-fun provideUserApi(): ApiClient {
-        val gson = GsonBuilder().create()
-        return Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/api/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(ApiClient::class.java)
-}
+     single { GsonBuilder().create() }
 
+     single { Retrofit.Builder()
+         .baseUrl("https://rickandmortyapi.com/api/")
+         .addConverterFactory(GsonConverterFactory.create(get()))
+         .build()
+         .create(ApiClient::class.java)
+     }
+}
