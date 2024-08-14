@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MortyPedia</string>
+    <string name="character_header">FILTER CHARACTER NAME</string>
 </resources>
