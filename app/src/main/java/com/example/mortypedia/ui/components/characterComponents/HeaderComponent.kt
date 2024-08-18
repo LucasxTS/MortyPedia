@@ -25,7 +25,7 @@ fun HeaderComponent() {
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.character_header),

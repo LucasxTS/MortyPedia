@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MortyPedia</string>
     <string name="character_header">FILTER CHARACTER NAME</string>
+    <string name="title_character_search">Search Character</string>
+    <string name="example_character_search">Character name. Ex: Morty Smith</string>
+    <string name="title_location_search">Search Location</string>
+    <string name="example_location_search">Location name. Ex: Citadel of Ricks</string>
 </resources>
