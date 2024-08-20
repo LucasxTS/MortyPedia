@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -51,8 +52,8 @@ fun ToggleStatusComponent(
         ) {
             options.forEachIndexed { index, imageRes ->
                 val isSelected = selectedOption == index
-                val textColor = if (isSelected) R.color.character_logo else R.color.black
-                val imageColor = if (isSelected) R.color.character_logo else R.color.black
+                val color = if (isSelected) colorResource(id = R.color.character_logo)
+                else colorResource(id = R.color.black)
                 TextButton(
                     onClick = { onOptionSelected(index) },
                     modifier = Modifier
@@ -65,12 +66,14 @@ fun ToggleStatusComponent(
                         Image(
                             painter = painterResource(id = imageRes.first),
                             contentDescription = "Option ${index + 1}",
-                            modifier = Modifier.size(64.dp),
+                            modifier = Modifier
+                                .size(64.dp),
                             contentScale = ContentScale.Fit,
+                            colorFilter = ColorFilter.tint(color)
                         )
                         Text(
                             text = imageRes.second,
-                            color = colorResource(textColor)
+                            color = color
                         )
                     }
 

@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mortypedia.domain.models.CharactersModel
 import com.example.mortypedia.domain.viewState.ViewState
+import com.example.mortypedia.ui.components.characterComponents.CharacterListComponent
 import com.example.mortypedia.ui.components.characterComponents.HeaderComponent
 import com.example.mortypedia.ui.components.characterComponents.LocationSearchBarComponent
 import com.example.mortypedia.ui.components.characterComponents.NameSearchBarComponent
@@ -36,19 +37,21 @@ fun CharacterScreen(
         NameSearchBarComponent(viewModel)
         LocationSearchBarComponent(viewModel)
         ToggleStatusComponent(1, {})
-    }
-    when (viewState) {
-        is ViewState.Loading -> {
 
-        }
-        is ViewState.Success -> {
-            val characters = (viewState as ViewState.Success<List<CharactersModel>>).data
-            println(characters)
-        }
-        is ViewState.Error -> {
-            println("Error on ViewState")
+        when (viewState) {
+            is ViewState.Loading -> {
+
+            }
+            is ViewState.Success -> {
+                val characters = (viewState as ViewState.Success<List<CharactersModel>>).data
+                CharacterListComponent(charactersList = characters)
+            }
+            is ViewState.Error -> {
+                println("Error on ViewState")
+            }
         }
     }
+
 }
 
 @Preview

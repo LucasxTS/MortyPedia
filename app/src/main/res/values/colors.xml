@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="character_logo">#40B5CB</color>
+    <color name="rick_episodes_green">#138E12</color>
+    <color name="green_divider_line">#74B750</color>
+    <color name="character_name">#D07136</color>
+    <color name="background_color_image">#9EDDEC</color>
 </resources>
