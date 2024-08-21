@@ -19,11 +19,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mortypedia.R
+import com.example.mortypedia.ui.features.character.CharacterViewModel
 
 @Composable
 fun ToggleStatusComponent(
-    selectedOption: Int,
-    onOptionSelected: (Int) -> Unit
+    viewModel: CharacterViewModel
 ) {
     val options = listOf(
         Pair(R.drawable.skull, "Dead"),
@@ -51,11 +51,14 @@ fun ToggleStatusComponent(
                 .fillMaxWidth()
         ) {
             options.forEachIndexed { index, imageRes ->
-                val isSelected = selectedOption == index
+                val isSelected = viewModel.selectedStatus == index
                 val color = if (isSelected) colorResource(id = R.color.character_logo)
                 else colorResource(id = R.color.black)
                 TextButton(
-                    onClick = { onOptionSelected(index) },
+                    onClick = {
+                        viewModel.selectedStatus = index
+                        viewModel.applyFilters()
+                              },
                     modifier = Modifier
                         .weight(1f)
                 ) {
@@ -76,8 +79,6 @@ fun ToggleStatusComponent(
                             color = color
                         )
                     }
-
-
                 }
             }
         }
@@ -88,5 +89,5 @@ fun ToggleStatusComponent(
 @Preview
 @Composable
 fun ToggleStatusComponentPreview() {
-    ToggleStatusComponent(1, {})
+
 }

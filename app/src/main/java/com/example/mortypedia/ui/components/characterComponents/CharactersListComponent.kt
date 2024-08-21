@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -37,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import coil.compose.rememberAsyncImagePainter
 import com.example.mortypedia.R
 import com.example.mortypedia.domain.models.CharactersModel
@@ -77,18 +74,18 @@ fun CharacterCardView(character: CharactersModel) {
             verticalArrangement = Arrangement.Center
         ) {
 
-                Image(
-                    painter = rememberAsyncImagePainter(character.image),
-                    contentDescription = "Character Image",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(120.dp),
-                    contentScale = ContentScale.Crop
-                )
+            Image(
+                painter = rememberAsyncImagePainter(character.image),
+                contentDescription = "Character Image",
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(120.dp),
+                contentScale = ContentScale.Crop
+            )
 
             Text(
                 text = character.name,
-                fontSize = 18.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(R.color.character_name),
                 modifier = Modifier.padding(bottom = 6.dp, top = 8.dp)
@@ -96,7 +93,7 @@ fun CharacterCardView(character: CharactersModel) {
 
             Text(
                 text = "Location: ${character.location.name}",
-                fontSize = 12.sp,
+                fontSize = 8.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 4.dp),
             )
@@ -110,14 +107,12 @@ fun CharacterCardView(character: CharactersModel) {
 
             Text(
                 text = "Status: ${character.status}",
-                fontSize = 12.sp,
+                fontSize = 8.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
             Button(
-                modifier = Modifier
-                    .height(4055.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                 onClick = { },
             ) {
@@ -137,7 +132,6 @@ fun CharacterCardView(character: CharactersModel) {
                         fontWeight = FontWeight.Bold
                     )
                 }
-
             }
         }
     }
@@ -146,5 +140,15 @@ fun CharacterCardView(character: CharactersModel) {
 @Preview
 @Composable
 fun CharacterCardViewPreview() {
-    CharacterCardView(CharactersModel(1, "Rick", "Alive", "Human", "sadsd", LocationName("dasdas"), "dfaksjdaklshd"))
+    CharacterCardView(
+        CharactersModel(
+            1,
+            "Rick",
+            "Alive",
+            "Human",
+            "sadsd",
+            LocationName("dasdas"),
+            "dfaksjdaklshd"
+        )
+    )
 }

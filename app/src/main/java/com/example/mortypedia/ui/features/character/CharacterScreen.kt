@@ -36,7 +36,7 @@ fun CharacterScreen(
         HeaderComponent()
         NameSearchBarComponent(viewModel)
         LocationSearchBarComponent(viewModel)
-        ToggleStatusComponent(1, {})
+        ToggleStatusComponent(viewModel)
 
         when (viewState) {
             is ViewState.Loading -> {

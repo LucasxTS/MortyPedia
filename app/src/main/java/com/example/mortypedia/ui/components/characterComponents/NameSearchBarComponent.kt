@@ -32,14 +32,16 @@ fun NameSearchBarComponent(
         Spacer(modifier = Modifier.size(4.dp))
         TextField(
             value = viewModel.nameSearchQuery,
-            onValueChange = {},
+            onValueChange = {
+                viewModel.nameSearchQuery = it
+                viewModel.applyFilters()
+                            },
             label = { Text(text = stringResource(id = R.string.example_character_search)) },
             modifier = Modifier
                 .fillMaxWidth(),
             singleLine = true
         )
     }
-
 }
 
 
