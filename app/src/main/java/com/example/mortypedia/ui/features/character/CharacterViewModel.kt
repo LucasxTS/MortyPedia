@@ -24,6 +24,8 @@ class CharacterViewModel(
     private val statusFilter: StatusFilter
 ) : ViewModel() {
 
+    private var currentPage = 1
+
     var nameSearchQuery by mutableStateOf("")
 
     var locationQuery by mutableStateOf("")
@@ -37,13 +39,18 @@ class CharacterViewModel(
 
     fun fetchData() {
         viewModelScope.launch {
-            characterRepository.getAllData()
+            characterRepository.getAllData(currentPage)
                 .onStart { _uiState.value = ViewState.Loading }
                 .catch { e -> _uiState.value = ViewState.Error(e.message ?: "Unknow Error") }
                 .collect { result ->
                         if (result.isSuccess) {
-                            originalCharacters = (result.getOrNull()?.results ?: "") as List<CharactersModel>
-                            _uiState.value = ViewState.Success(result.getOrNull()?.results ?: emptyList())
+                            val newCharacters = (result.getOrNull()?.results ?: "") as List<CharactersModel>
+                            originalCharacters = originalCharacters + newCharacters
+
+                            _uiState.value = ViewState.Success(originalCharacters)
+                            println("------------PAGINA $currentPage   ----------------- ")
+                            currentPage++
+                            println("------------PAGINA ADICIONADA A : $currentPage ----------------- ")
                         } else {
                             _uiState.value = ViewState.Error(result.exceptionOrNull()?.message ?: "Erro desconhecido")
                         }
@@ -54,7 +61,6 @@ class CharacterViewModel(
         val filteredByName = nameFilter.execute(originalCharacters, nameSearchQuery)
         val filterByLocation = locationFilter.execute(filteredByName, locationQuery)
         val filterByStatus = statusFilter.execute(filterByLocation, selectedStatus)
-
         _uiState.value = ViewState.Success(filterByStatus)
     }
 }

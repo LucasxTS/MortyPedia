@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class CharacterRepository(private val apiClient: ApiClient) {
-      fun getAllData(): Flow<Result<CharacterResponseApi>> = flow {
+      fun getAllData(page: Int): Flow<Result<CharacterResponseApi>> = flow {
         try {
-            val response  = apiClient.getCharacters()
+            val response  = apiClient.getCharacters(page = page)
             if(response.isSuccessful) {
                 val data = response.body()
                 if(data != null) {

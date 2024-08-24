@@ -40,11 +40,11 @@ fun CharacterScreen(
 
         when (viewState) {
             is ViewState.Loading -> {
-
+                
             }
             is ViewState.Success -> {
                 val characters = (viewState as ViewState.Success<List<CharactersModel>>).data
-                CharacterListComponent(charactersList = characters)
+                CharacterListComponent(charactersList = characters, viewModel)
             }
             is ViewState.Error -> {
                 println("Error on ViewState")

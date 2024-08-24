@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,6 +25,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,16 +42,27 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.mortypedia.R
 import com.example.mortypedia.domain.models.CharactersModel
 import com.example.mortypedia.domain.models.LocationName
+import com.example.mortypedia.ui.features.character.CharacterViewModel
+import kotlinx.coroutines.flow.collect
 
 @Composable
-fun CharacterListComponent(charactersList: List<CharactersModel>) {
-    LazyRow {
+fun CharacterListComponent(charactersList: List<CharactersModel>, viewModel: CharacterViewModel) {
+    val listState = rememberLazyListState()
+
+    LazyRow(state = listState) {
         items(charactersList) { item ->
             CharacterCardView(character = item)
         }
     }
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull() }
+            .collect { lastVisibleItem ->
+                if (lastVisibleItem != null && lastVisibleItem.index == charactersList.lastIndex -1) {
+                    viewModel.fetchData()
+                }
+            }
+    }
 }
-
 @Composable
 fun CharacterCardView(character: CharactersModel) {
     Card(
