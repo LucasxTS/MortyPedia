@@ -25,8 +25,6 @@ fun CharacterScreen(
     navController: NavController,
     viewModel: CharacterViewModel = koinViewModel()
 ) {
-    val viewState by viewModel.uiState.collectAsState()
-
     LaunchedEffect(Unit) {
         viewModel.fetchData()
     }
@@ -34,24 +32,22 @@ fun CharacterScreen(
         Modifier.fillMaxSize()
     ) {
         HeaderComponent()
-        NameSearchBarComponent(viewModel)
-        LocationSearchBarComponent(viewModel)
+        NameSearchBarComponent(
+            viewModel.nameSearchQuery
+        ) {
+            viewModel.nameSearchQuery = it
+            viewModel.applyFilters()
+        }
+        LocationSearchBarComponent(
+            viewModel.locationQuery
+        ) {
+            viewModel.locationQuery = it
+            viewModel.applyFilters()
+        }
         ToggleStatusComponent(viewModel)
 
-        when (viewState) {
-            is ViewState.Loading -> {
-                
-            }
-            is ViewState.Success -> {
-                val characters = (viewState as ViewState.Success<List<CharactersModel>>).data
-                CharacterListComponent(charactersList = characters, viewModel)
-            }
-            is ViewState.Error -> {
-                println("Error on ViewState")
-            }
-        }
+        CharacterListComponent(viewModel)
     }
-
 }
 
 @Preview

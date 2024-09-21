@@ -16,7 +16,10 @@ import com.example.mortypedia.R
 import com.example.mortypedia.ui.features.character.CharacterViewModel
 
 @Composable
-fun LocationSearchBarComponent(viewModel: CharacterViewModel) {
+fun LocationSearchBarComponent(
+    text: String,
+    onTextChanged: (String) -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -29,11 +32,8 @@ fun LocationSearchBarComponent(viewModel: CharacterViewModel) {
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextField(
-            value = viewModel.locationQuery,
-            onValueChange = {
-                viewModel.locationQuery = it
-                viewModel.applyFilters()
-                            },
+            value = text,
+            onValueChange = onTextChanged,
             label = { Text(text = stringResource(id = R.string.example_location_search)) },
             modifier = Modifier
                 .fillMaxWidth(),

@@ -26,7 +26,10 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,25 +45,32 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.mortypedia.R
 import com.example.mortypedia.domain.models.CharactersModel
 import com.example.mortypedia.domain.models.LocationName
+import com.example.mortypedia.domain.viewState.ViewState
 import com.example.mortypedia.ui.features.character.CharacterViewModel
-import kotlinx.coroutines.flow.collect
 
 @Composable
-fun CharacterListComponent(charactersList: List<CharactersModel>, viewModel: CharacterViewModel) {
+fun CharacterListComponent(
+    viewModel: CharacterViewModel,
+) {
     val listState = rememberLazyListState()
-
-    LazyRow(state = listState) {
-        items(charactersList) { item ->
-            CharacterCardView(character = item)
+    val characters by viewModel.uiState.collectAsState()
+    val reachedBottom by remember {
+        derivedStateOf {
+            val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
+            lastVisibleItem != null && lastVisibleItem.index == listState.layoutInfo.totalItemsCount - 1
         }
     }
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull() }
-            .collect { lastVisibleItem ->
-                if (lastVisibleItem != null && lastVisibleItem.index == charactersList.lastIndex -1) {
-                    viewModel.fetchData()
-                }
-            }
+
+    LaunchedEffect(reachedBottom) {
+        if (reachedBottom) {
+            viewModel.fetchData()
+        }
+    }
+
+    LazyRow(state = listState) {
+        items(characters) { item ->
+            CharacterCardView(character = item)
+        }
     }
 }
 @Composable
