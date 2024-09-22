@@ -1,8 +1,10 @@
     package com.example.mortypedia.ui.features.character
 
     import androidx.compose.runtime.getValue
+    import androidx.compose.runtime.mutableStateListOf
     import androidx.compose.runtime.mutableStateOf
     import androidx.compose.runtime.setValue
+    import androidx.compose.runtime.snapshots.SnapshotStateList
     import androidx.lifecycle.ViewModel
     import androidx.lifecycle.viewModelScope
     import com.example.mortypedia.domain.models.CharactersModel
@@ -35,7 +37,7 @@
 
         private var originalCharacters = mutableListOf<CharactersModel>()
 
-        private val _uiState = MutableStateFlow<List<CharactersModel>>(listOf())
+        private val _uiState = MutableStateFlow(mutableStateListOf<CharactersModel>())
         val uiState = _uiState.asStateFlow()
 
         fun fetchData() {
@@ -45,11 +47,11 @@
                             result.onSuccess {data ->
                                 val newCharacters = data.results
                                 originalCharacters.addAll(newCharacters)
-                                _uiState.emit(originalCharacters)
+                                _uiState.emit(originalCharacters.toSnapshot())
                                 currentPage++
                             }
                         result.onFailure {
-                            _uiState.emit(listOf())
+
                         }
                     }
             }
@@ -59,7 +61,10 @@
             val filterByLocation = locationFilter.execute(filteredByName, locationQuery)
             val filterByStatus = statusFilter.execute(filterByLocation, selectedStatus)
             viewModelScope.launch {
-                _uiState.emit(filterByStatus)
+                _uiState.emit(filterByStatus.toSnapshot())
             }
         }
+
+        private fun List<CharactersModel>.toSnapshot(): SnapshotStateList<CharactersModel> =
+            SnapshotStateList<CharactersModel>().apply { addAll(this@toSnapshot)}
     }
