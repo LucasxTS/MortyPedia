@@ -54,6 +54,7 @@ fun CharacterListComponent(
 ) {
     val listState = rememberLazyListState()
     val characters by viewModel.uiState.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
     val reachedBottom by remember {
         derivedStateOf {
             val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
@@ -67,9 +68,18 @@ fun CharacterListComponent(
         }
     }
 
-    LazyRow(state = listState) {
-        items(characters) { item ->
-            CharacterCardView(character = item)
+    Row(
+        Modifier
+            .fillMaxWidth(),
+
+    ) {
+        LazyRow(state = listState) {
+            items(characters) { item ->
+                CharacterCardView(character = item)
+            }
+        }
+        if (isLoading.value) {
+            IndeterminateLoading()
         }
     }
 }

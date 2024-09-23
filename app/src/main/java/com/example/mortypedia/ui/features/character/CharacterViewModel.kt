@@ -40,18 +40,22 @@
         private val _uiState = MutableStateFlow(mutableStateListOf<CharactersModel>())
         val uiState = _uiState.asStateFlow()
 
+        var _isLoading = MutableStateFlow(false)
+        var isLoading: StateFlow<Boolean> = _isLoading
         fun fetchData() {
             viewModelScope.launch {
+                _isLoading.value = true
                 characterRepository.getAllData(currentPage)
                     .collect { result ->
                             result.onSuccess {data ->
                                 val newCharacters = data.results
                                 originalCharacters.addAll(newCharacters)
                                 _uiState.emit(originalCharacters.toSnapshot())
+                                _isLoading.value = false
                                 currentPage++
                             }
                         result.onFailure {
-
+                            println(it)
                         }
                     }
             }

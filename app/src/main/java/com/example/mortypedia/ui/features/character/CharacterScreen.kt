@@ -14,6 +14,7 @@ import com.example.mortypedia.domain.models.CharactersModel
 import com.example.mortypedia.domain.viewState.ViewState
 import com.example.mortypedia.ui.components.characterComponents.CharacterListComponent
 import com.example.mortypedia.ui.components.characterComponents.HeaderComponent
+import com.example.mortypedia.ui.components.characterComponents.IndeterminateLoading
 import com.example.mortypedia.ui.components.characterComponents.LocationSearchBarComponent
 import com.example.mortypedia.ui.components.characterComponents.NameSearchBarComponent
 import com.example.mortypedia.ui.components.characterComponents.ToggleStatusComponent
@@ -25,6 +26,7 @@ fun CharacterScreen(
     navController: NavController,
     viewModel: CharacterViewModel = koinViewModel()
 ) {
+    val isLoading = viewModel.isLoading.collectAsState()
     LaunchedEffect(Unit) {
         viewModel.fetchData()
     }
@@ -45,7 +47,6 @@ fun CharacterScreen(
             viewModel.applyFilters()
         }
         ToggleStatusComponent(viewModel)
-
         CharacterListComponent(viewModel)
     }
 }
