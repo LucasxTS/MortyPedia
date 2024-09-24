@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun IndeterminateLoading() {
-
     Box(
         Modifier.fillMaxSize()
     ) {
@@ -23,9 +22,7 @@ fun IndeterminateLoading() {
                 .align(Alignment.Center)
         )
     }
-
 }
-
 @Preview
 @Composable
 fun IndeterminateLoadingPreview() {
