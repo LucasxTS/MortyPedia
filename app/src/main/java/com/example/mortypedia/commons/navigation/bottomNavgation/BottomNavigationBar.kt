@@ -37,8 +37,8 @@ fun BottomNavigationBar(currentRoute: Routes, onRouteSelected: (Routes) -> Unit)
         BottomNavItems.Episodes,
     )
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.green_divider_line),
-        elevation = 4.dp,
+        backgroundColor = colorResource(id = R.color.background_color_image),
+        elevation = 44.dp,
         modifier = Modifier
             .clip(RoundedCornerShape(24.dp))
 
@@ -54,7 +54,7 @@ fun BottomNavigationBar(currentRoute: Routes, onRouteSelected: (Routes) -> Unit)
                         },
                 selected = currentRoute == item.route,
                 onClick = { onRouteSelected(item.route) },
-                selectedContentColor = Color.Black,
+                selectedContentColor = Color.White,
                 unselectedContentColor = Color.Gray
             )
         }

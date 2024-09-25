@@ -13,12 +13,14 @@
     import com.example.mortypedia.domain.usecase.charactersFilters.NameFilter
     import com.example.mortypedia.domain.usecase.charactersFilters.StatusFilter
     import com.example.mortypedia.domain.viewState.ViewState
+    import kotlinx.coroutines.Dispatchers
     import kotlinx.coroutines.flow.MutableStateFlow
     import kotlinx.coroutines.flow.StateFlow
     import kotlinx.coroutines.flow.asStateFlow
     import kotlinx.coroutines.flow.catch
     import kotlinx.coroutines.flow.onStart
     import kotlinx.coroutines.launch
+    import kotlinx.coroutines.withContext
 
     class CharacterViewModel(
         private val characterRepository: CharacterRepository,
@@ -61,12 +63,15 @@
             }
         }
         fun applyFilters() {
-            val filteredByName = nameFilter.execute(originalCharacters, nameSearchQuery)
-            val filterByLocation = locationFilter.execute(filteredByName, locationQuery)
-            val filterByStatus = statusFilter.execute(filterByLocation, selectedStatus)
             viewModelScope.launch {
-                _uiState.emit(filterByStatus.toSnapshot())
+                val filteredByStatus = withContext(Dispatchers.Default) {
+                    val filteredByName = nameFilter.execute(originalCharacters, nameSearchQuery)
+                    val filterByLocation = locationFilter.execute(filteredByName, locationQuery)
+                    statusFilter.execute(filterByLocation, selectedStatus)
+                }
+                _uiState.emit(filteredByStatus.toSnapshot())
             }
+
         }
 
         private fun List<CharactersModel>.toSnapshot(): SnapshotStateList<CharactersModel> =

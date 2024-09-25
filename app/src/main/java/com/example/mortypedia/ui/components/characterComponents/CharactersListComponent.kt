@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -102,6 +103,7 @@ fun CharacterCardView(character: CharactersModel) {
         )
         Column(
             Modifier
+                .fillMaxHeight()
                 .fillMaxWidth()
                 .offset(y = (-72).dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -119,7 +121,7 @@ fun CharacterCardView(character: CharactersModel) {
 
             Text(
                 text = character.name,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(R.color.character_name),
                 modifier = Modifier.padding(bottom = 6.dp, top = 8.dp)
@@ -127,7 +129,7 @@ fun CharacterCardView(character: CharactersModel) {
 
             Text(
                 text = "Location: ${character.location.name}",
-                fontSize = 8.sp,
+                fontSize = 12.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 4.dp),
             )
@@ -136,15 +138,17 @@ fun CharacterCardView(character: CharactersModel) {
                 color = colorResource(id = R.color.green_divider_line),
                 modifier = Modifier
                     .padding(vertical = 4.dp)
-                    .width(80.dp)
+                    .width(100.dp)
             )
 
             Text(
                 text = "Status: ${character.status}",
-                fontSize = 8.sp,
+                fontSize = 12.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
+
+            Spacer(modifier = Modifier.padding(8.dp))
 
             Button(
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
